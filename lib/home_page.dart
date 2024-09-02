@@ -16,11 +16,24 @@ class SmartClassApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
-  final List<String> lectureNames = [
-    'Lecture 1: Mathematics',
-    'Lecture 2: Science',
-    'Lecture 3: History',
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _isProfileVisible = false;
+
+  void _toggleProfile() {
+    setState(() {
+      _isProfileVisible = !_isProfileVisible;
+    });
+  }
+
+  final List<Map<String, dynamic>> lectures = [
+    {'name': 'Mathematics', 'icon': Icons.calculate},
+    {'name': 'Science', 'icon': Icons.science},
+    {'name': 'History', 'icon': Icons.history_edu},
   ];
 
   @override
@@ -28,21 +41,40 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Smart Class App'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: _toggleProfile,
+          ),
+        ],
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(16.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 16.0,
-          childAspectRatio: 1,
-        ),
-        itemCount: lectureNames.length,
-        itemBuilder: (context, index) {
-          return LectureCard(
-            lectureName: lectureNames[index],
-          );
-        },
+      body: Stack(
+        children: [
+          GridView.builder(
+            padding: EdgeInsets.all(16.0),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16.0,
+              mainAxisSpacing: 16.0,
+              childAspectRatio: 1,
+            ),
+            itemCount: lectures.length,
+            itemBuilder: (context, index) {
+              return LectureCard(
+                lectureName: lectures[index]['name'],
+                lectureIcon: lectures[index]['icon'],
+              );
+            },
+          ),
+          if (_isProfileVisible)
+            Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: 300,
+              child: ProfileOverlay(onClose: _toggleProfile),
+            ),
+        ],
       ),
     );
   }
@@ -50,8 +82,9 @@ class HomePage extends StatelessWidget {
 
 class LectureCard extends StatelessWidget {
   final String lectureName;
+  final IconData lectureIcon;
 
-  LectureCard({required this.lectureName});
+  LectureCard({required this.lectureName, required this.lectureIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +103,21 @@ class LectureCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
-          child: Text(
-            lectureName,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                lectureIcon,
+                size: 48,
+                color: Colors.blue,
+              ),
+              SizedBox(height: 16),
+              Text(
+                lectureName,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ),
@@ -149,3 +193,95 @@ class LectureDetailPage extends StatelessWidget {
     );
   }
 }
+
+class ProfileOverlay extends StatelessWidget {
+  final VoidCallback onClose;
+
+  ProfileOverlay({required this.onClose});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black.withOpacity(0.9), // Opaque dark background
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch, // Full-width buttons
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(Icons.close, color: Colors.white),
+              onPressed: onClose,
+            ),
+          ),
+          SizedBox(height: 16),
+          CircleAvatar(
+            radius: 80,
+            backgroundImage: NetworkImage('https://via.placeholder.com/150'), // Replace with your profile picture URL
+          ),
+          SizedBox(height: 16),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch, // Full-width buttons
+                children: [
+                  Text(
+                    'John Doe',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'ID: 123456789',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Email: john.doe@example.com',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Handle messages button press
+                    },
+                    child: Text('Messages'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      textStyle: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Handle notifications button press
+                    },
+                    child: Text('Notifications'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      textStyle: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Handle attendance button press
+                    },
+                    child: Text('Attendance'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      textStyle: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
