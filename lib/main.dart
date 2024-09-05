@@ -1,6 +1,6 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'home_page.dart';
+import 'login_page.dart';  // Import the login page
 
 void main() => runApp(SmartClassApp());
 
@@ -10,7 +10,7 @@ class SmartClassApp extends StatelessWidget {
     return MaterialApp(
       title: 'Smart Class',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomePage(),
+      home: LoginPage(),  // Start with the LoginPage
     );
   }
 }
