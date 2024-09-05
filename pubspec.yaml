@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  web_socket_channel: ^2.1.0
+  flutter_drawing_board: ^0.9.3
+
 
 dev_dependencies:
   flutter_test:

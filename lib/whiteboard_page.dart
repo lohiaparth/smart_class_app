@@ -21,9 +21,13 @@ class _WhiteboardPageState extends State<WhiteboardPage> {
   @override
   void initState() {
     super.initState();
+
     // Listening to incoming messages from the WebSocket
     channel.stream.listen((message) {
       print('Message received from server: $message');
+      _processIncomingStrokeData(message); // Process and draw the incoming stroke
+    }, onError: (error) {
+      print('WebSocket error: $error');
     });
   }
 
@@ -31,7 +35,47 @@ class _WhiteboardPageState extends State<WhiteboardPage> {
   void sendStrokeData(List<Offset> points) {
     for (int i = 0; i < points.length - 1; i++) {
       final message = 'DRAW ${points[i].dx},${points[i].dy},${points[i + 1].dx},${points[i + 1].dy}';
+      print('Sending stroke data to server: $message');
       channel.sink.add(message); // Send the message via WebSocket
+    }
+  }
+
+  // Process the incoming stroke data
+  void _processIncomingStrokeData(String message) {
+    try {
+      if (message.startsWith('DRAW')) {
+        // Example: "DRAW x1,y1,x2,y2"
+        final parts = message.split(' ');
+        if (parts.length == 2) {
+          final coordinates = parts[1].split(',');
+          if (coordinates.length == 4) {
+            final x1 = double.tryParse(coordinates[0]) ?? 0;
+            final y1 = double.tryParse(coordinates[1]) ?? 0;
+            final x2 = double.tryParse(coordinates[2]) ?? 0;
+            final y2 = double.tryParse(coordinates[3]) ?? 0;
+
+            print('Parsed points: ($x1, $y1) to ($x2, $y2)');
+
+            // Create two points based on the coordinates
+            final point1 = Offset(x1, y1);
+            final point2 = Offset(x2, y2);
+
+            // Add these points as a stroke and update the state to trigger a repaint
+            setState(() {
+              strokes.add([point1, point2]);
+              print('Added stroke: $point1 to $point2');
+            });
+          } else {
+            print('Invalid coordinate format: $coordinates');
+          }
+        } else {
+          print('Invalid DRAW command format: $parts');
+        }
+      } else {
+        print('Received non-DRAW message: $message');
+      }
+    } catch (e) {
+      print('Error processing message: $e');
     }
   }
 
