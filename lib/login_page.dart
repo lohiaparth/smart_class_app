@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_page.dart'; // Import the HomePage
 
 class LoginPage extends StatelessWidget {
   @override
@@ -39,7 +40,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 40),
-                  
+
                   // Student ID Field
                   TextField(
                     decoration: InputDecoration(
@@ -52,7 +53,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20),
-                  
+
                   // Password Field
                   TextField(
                     obscureText: true,
@@ -66,18 +67,23 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 40),
-                  
+
                   // Login Button with Green Gradient
                   GestureDetector(
                     onTap: () {
-                      // Handle login logic here
+                      // Perform login logic here
+                      // After login, navigate to the HomePage
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         gradient: LinearGradient(
-                          colors: [const Color.fromRGBO(53,222,147, 1), const Color.fromRGBO(29,120,79, 1)], // Green gradient
+                          colors:  [const Color.fromRGBO(53,222,147, 1), const Color.fromRGBO(29,120,79, 1)], // Green gradient
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -109,3 +115,11 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
