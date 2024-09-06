@@ -202,7 +202,7 @@ class ProfileOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withOpacity(0.9), // Opaque dark background
+      color: Colors.black.withOpacity(0.9), // Opaque background
       padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch, // Full-width buttons
@@ -215,64 +215,120 @@ class ProfileOverlay extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
+          // Profile Picture
           CircleAvatar(
-            radius: 80,
+            radius: 50, 
             backgroundImage: NetworkImage('https://via.placeholder.com/150'), // Replace with your profile picture URL
           ),
           SizedBox(height: 16),
+          // Details Section
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch, // Full-width buttons
                 children: [
-                  Text(
-                    'Parth',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'ID: C108',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Email: parth@example.com',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  // SAP ID
+                  Row(
+                    children: [
+                      Icon(Icons.badge, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text(
+                        'Sap ID: 70322000056',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle messages button press
-                    },
-                    child: Text('Messages'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      textStyle: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
+                  // Roll Number
+                  Row(
+                    children: [
+                      Icon(Icons.numbers, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text(
+                        'Roll no: C116',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle notifications button press
-                    },
-                    child: Text('Notifications'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      textStyle: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
+                  SizedBox(height: 16),
+                  // Email
+                  Row(
+                    children: [
+                      Icon(Icons.email, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text(
+                        'ayushkothari@gmail.com',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle attendance button press
-                    },
-                    child: Text('Attendance'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      textStyle: TextStyle(fontSize: 16, color: Colors.white),
+                  SizedBox(height: 16),
+                  // Phone Number
+                  Row(
+                    children: [
+                      Icon(Icons.phone, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text(
+                        '9878565422',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  // Profile Option
+                  Row(
+                    children: [
+                      Icon(Icons.person, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text(
+                        'Profile',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  // Change Password Option
+                  Row(
+                    children: [
+                      Icon(Icons.lock, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text(
+                        'Change password',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  // Logout Button with Gradient
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.green, Colors.lightGreenAccent],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle logout action
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'LOGOUT',
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(width: 8),
+                          Icon(Icons.logout, color: Colors.white),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -284,4 +340,5 @@ class ProfileOverlay extends StatelessWidget {
     );
   }
 }
+
 
