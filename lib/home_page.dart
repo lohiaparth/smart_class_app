@@ -226,17 +226,17 @@ class ProfileOverlay extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch, // Full-width buttons
                 children: [
                   Text(
-                    'John Doe',
+                    'Parth',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'ID: 123456789',
+                    'ID: C108',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Email: john.doe@example.com',
+                    'Email: parth@example.com',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                   SizedBox(height: 16),
